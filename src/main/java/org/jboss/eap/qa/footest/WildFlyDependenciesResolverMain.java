@@ -1,5 +1,6 @@
 package org.jboss.eap.qa.footest;
 
+import net.lingala.zip4j.core.ZipFile;
 import org.jboss.shrinkwrap.resolver.api.ResolutionException;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.PackagingType;
@@ -12,7 +13,9 @@ import java.util.logging.LogManager;
 
 public class WildFlyDependenciesResolverMain {
 
-    public static void main(String[] args) {
+    private static final String sourcesDestination = "sources";
+
+    public static void main(String[] args) throws Exception {
         System.out.println(new Date());
 
         //disable logging / warning
@@ -37,6 +40,10 @@ public class WildFlyDependenciesResolverMain {
                             + ":" + artifact.getType().toString() + ":sources:" + artifact.getVersion())
                             .withoutTransitivity().asSingleFile();
                     System.out.println(artifact + " : " + sources.getAbsolutePath());
+
+                    ZipFile zipFile = new ZipFile(sources);
+                    zipFile.extractAll(sourcesDestination);
+
                 } catch (ResolutionException ex) {
                     System.out.println("NO SOURCES for " + artifact);
                 }
