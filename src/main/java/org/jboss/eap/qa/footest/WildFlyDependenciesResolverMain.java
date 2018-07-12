@@ -21,12 +21,12 @@ public class WildFlyDependenciesResolverMain {
         //disable logging / warning
         LogManager.getLogManager().reset();
 
-        String wildflyCoreVersion = "5.0.0.Final";
-        String wildflyVersion = "13.0.0.Final";
+        String wildflyCoreVersion = "6.0.0.Alpha4-SNAPSHOT";
+        String wildflyVersion = "14.0.0.Beta1-SNAPSHOT";
 
         List<MavenCoordinate> coordinates = Maven.resolver().resolve(
-                        "org.wildfly:wildfly-feature-pack:pom" + ":" + wildflyVersion,
-                        "org.wildfly:wildfly-servlet-feature-pack:pom" + ":" + wildflyVersion,
+                        "org.wildfly:wildfly-galleon-pack:pom" + ":" + wildflyVersion,
+                        "org.wildfly:wildfly-servlet-galleon-pack:pom" + ":" + wildflyVersion,
                         "org.wildfly.core:wildfly-core-galleon-pack:pom" + ":" + wildflyCoreVersion
                 )
                 .withTransitivity().asList(MavenCoordinate.class);
