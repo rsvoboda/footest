@@ -5,17 +5,15 @@ import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.ZipFile;
 
 public class CompareWFMain {
 
-    private static final String directoryOneDefault = "/Users/rsvoboda/TESTING/wildfly-13.0.0.Beta1";
-    private static final String directoryTwoDefault = "/Users/rsvoboda/TESTING/wildfly-13.0.0.Final";
+    private static final String directoryOneDefault = "/Users/rsvoboda/TESTING/720CD13.SP01/jboss-eap-7.2";
+    private static final String directoryTwoDefault = "/Users/rsvoboda/TESTING/720Beta.CR1/jboss-eap-7.2";
 
 
     public static void main(String... args) throws Exception {
@@ -23,7 +21,7 @@ public class CompareWFMain {
         String directoryOne = directoryOneDefault;
         String directoryTwo = directoryTwoDefault;
 
-        if (args.length == 2 ) {
+        if (args.length == 2) {
             directoryOne = args[0];
             directoryTwo = args[1];
         }
@@ -43,19 +41,50 @@ public class CompareWFMain {
         directoryOneClassesExtraClasses.removeAll(directoryTwoClasses);
 
         System.out.println();
-        System.out.println("directoryOneClassesExtraClasses size: " + directoryOneClassesExtraClasses.size());
+        System.out.println("directoryOneExtraClasses size: " + directoryOneClassesExtraClasses.size());
         directoryOneClassesExtraClasses.stream().forEach(System.out::println);
 
         System.out.println();
-        System.out.println("directoryTwoClassesExtraClasses size: " + directoryTwoClassesExtraClasses.size());
+        System.out.println("directoryTwoExtraClasses size: " + directoryTwoClassesExtraClasses.size());
         directoryTwoClassesExtraClasses.stream().forEach(System.out::println);
 
+        System.out.println();
+        System.out.println("directoryOneExtraClasses summary:");
+        packagesSummary(directoryOneClassesExtraClasses, 3);
 
-
+        System.out.println();
+        System.out.println("directoryTwoClassesExtraClasses summary:");
+        packagesSummary(directoryTwoClassesExtraClasses, 3);
     }
 
+    private static void packagesSummary(Set<String> classes, int packageLevel) {
+        Map<String, Integer> packages = new TreeMap<>();
+        classes.stream()
+                .filter(entry -> entry.contains("/"))
+                .map(entry -> extractPackageFromZipEntry(entry, packageLevel))
+                .forEach(pkg -> {
+                    if (packages.containsKey(pkg)) {
+                        packages.put(pkg, packages.get(pkg) + 1);
+                    } else {
+                        packages.put(pkg, 1);
+                    }
+                });
+        packages.entrySet()
+                .forEach(System.out::println);
+    }
 
-    private static Set<String> classesInJarsUnderPath (Path rootDirPath) throws IOException {
+    private static String extractPackageFromZipEntry(String entry, int packageLevel) {
+
+        String[] entrySplit = entry
+                .substring(0, entry.lastIndexOf("/"))
+                .split("\\/", packageLevel + 1);
+
+        return String.join(
+                ".", Arrays.copyOfRange(entrySplit, 0, packageLevel))
+                .replaceAll(".null", "");
+    }
+
+    private static Set<String> classesInJarsUnderPath(Path rootDirPath) throws IOException {
         Set<String> allClasses = new HashSet<>(5000);
         jarsAsZipFiles(rootDirPath)
                 .forEach(zip -> {
