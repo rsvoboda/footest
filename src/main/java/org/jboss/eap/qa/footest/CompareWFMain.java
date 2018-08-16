@@ -12,8 +12,8 @@ import java.util.zip.ZipFile;
 
 public class CompareWFMain {
 
-    private static final String directoryOneDefault = "/Users/rsvoboda/TESTING/720CD13.SP01/jboss-eap-7.2";
-    private static final String directoryTwoDefault = "/Users/rsvoboda/TESTING/720Beta.CR1/jboss-eap-7.2";
+    private static final String directoryOneDefault = "/Users/rsvoboda/tmp/wildfly-14.0.0.Beta1";
+    private static final String directoryTwoDefault = "/Users/rsvoboda/tmp/wildfly-14.0.0.Beta2";
 
 
     public static void main(String... args) throws Exception {
