@@ -17,7 +17,8 @@ import java.util.zip.ZipFile;
 public class AnalyseWFMain {
 
 //    private static final String directoryOneDefault = "/Users/rsvoboda/tmp/wildfly-14.0.0.Beta2/modules/";
-    private static final String directoryOneDefault = "/Users/rsvoboda/git/wildfly/dist/target/wildfly-14.0.0.CR1-SNAPSHOT/";
+    private static final String directoryOneDefault = "/Users/rsvoboda/git/wildfly/dist/target/wildfly-15.0.0.Alpha1-SNAPSHOT/";
+//    private static final String directoryOneDefault = "/Users/rsvoboda/TESTING/720CD14.CR1/jboss-eap-7.2/";
 
     public static void main(String... args) throws Exception {
 
@@ -44,7 +45,7 @@ public class AnalyseWFMain {
         suspiciousModules(directoryOne + "modules/");
 
         header("Duplicate Packages", true);
-        duplicatePackages(directoryOne);
+        duplicatePackages(directoryOne + "modules/");
 
         header("Duplicate Classes", true);
         duplicateClasses(directoryOne + "modules/");
