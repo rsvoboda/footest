@@ -17,8 +17,8 @@ import java.util.zip.ZipFile;
 public class AnalyseWFMain {
 
 //    private static final String directoryOneDefault = "/Users/rsvoboda/tmp/wildfly-14.0.0.Beta2/modules/";
-    private static final String directoryOneDefault = "/Users/rsvoboda/git/wildfly/dist/target/wildfly-15.0.0.Alpha1-SNAPSHOT/";
-//    private static final String directoryOneDefault = "/Users/rsvoboda/TESTING/720CD14.CR1/jboss-eap-7.2/";
+//    private static final String directoryOneDefault = "/Users/rsvoboda/git/wildfly/dist/target/wildfly-15.0.0.Alpha1-SNAPSHOT/";
+    private static final String directoryOneDefault = "/Users/rsvoboda/TESTING/7.2.0.GA.CR1-20181105/jboss-eap-7.2/";
 
     public static void main(String... args) throws Exception {
 
