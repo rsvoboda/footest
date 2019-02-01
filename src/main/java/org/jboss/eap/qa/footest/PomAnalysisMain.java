@@ -16,6 +16,7 @@ import java.util.Properties;
 public class PomAnalysisMain {
 
     private static final String FILE_URL = "https://raw.githubusercontent.com/wildfly/wildfly/master/pom.xml";
+    private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
     public static void main(String... args) {
         try {
@@ -37,14 +38,14 @@ public class PomAnalysisMain {
                 if (! oldProperties.containsKey(key)) {
                     sb.append("Added property: ");
                     sb.append(key);
-                    sb.append(System.getProperty("line.separator"));
+                    sb.append(LINE_SEPARATOR);
                 }
             }
             for (String key : oldProperties.stringPropertyNames()) {
                 if (! newProperties.containsKey(key)) {
                     sb.append("Removed property: ");
                     sb.append(key);
-                    sb.append(System.getProperty("line.separator"));
+                    sb.append(LINE_SEPARATOR);
                 }
             }
             // changed properties
@@ -53,7 +54,7 @@ public class PomAnalysisMain {
                 if (oldValue != null && !entry.getValue().equals(oldValue)) {
                     sb.append("Changed property: ");
                     sb.append(String.format("%s from %s to %s\n", entry.getKey(), oldValue, entry.getValue()));
-                    sb.append(System.getProperty("line.separator"));
+                    sb.append(LINE_SEPARATOR);
                 }
             }
 
